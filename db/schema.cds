@@ -1,3 +1,4 @@
+namespace sap.ui.cosmetics;
 using { cuid, Country } from '@sap/cds/common';
 
 entity Cosmetics : cuid {
@@ -16,4 +17,14 @@ entity Brands : cuid {
 
 type Types : String enum {
   Face; Body; Hands; Legs; Hair;
+}
+
+entity Orders : cuid {
+  cosmetics : Association to many Cosmetics;
+  users : Association to Users;
+}
+
+entity Users : cuid {
+  name : String;
+  isAuth : Boolean;
 }
