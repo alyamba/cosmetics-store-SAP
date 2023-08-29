@@ -2,9 +2,9 @@ namespace sap.ui.cosmetics;
 using { cuid, Country } from '@sap/cds/common';
 
 entity Cosmetics : cuid {
-  name  : String;
-  descr  : String;
-  type  : Types;
+  name  : localized String;
+  descr  : localized String;
+  type  : localized Types;
   brands : Association to Brands;
   price: Integer;
 }

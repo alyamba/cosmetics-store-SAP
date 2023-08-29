@@ -1,1 +1,18 @@
-{}
+{
+  "[development]": {
+      "auth": {
+          "passport": {
+              "strategy": "mock",
+              "users": {
+                  "buyer": {
+                      "password": "buyer",
+                      "ID": "buyer",
+                      "roles": [
+                          "buyer"
+                      ]
+                  }
+              }
+          }
+      }
+  }
+}
