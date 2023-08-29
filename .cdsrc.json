@@ -10,7 +10,14 @@
                       "roles": [
                           "buyer"
                       ]
-                  }
+                  },
+                  "admin": {
+                    "password": "admin",
+                    "ID": "admin",
+                    "roles": [
+                        "admin"
+                    ]
+                }
               }
           }
       }

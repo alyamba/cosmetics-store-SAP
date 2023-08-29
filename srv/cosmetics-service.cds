@@ -20,7 +20,22 @@ service UsersService {
 /** Serves administrators managing everything */
 @requires: 'authenticated-user'
 service AdminService {
-  entity Cosmetics   as projection on my.Cosmetics;
-  entity Brands as projection on my.Brands;
-  entity Orders  as projection on my.Orders;
+  entity Cosmetics @(restrict : [
+            {
+                grant : [ '*' ],
+                to : [ 'admin' ]
+            }
+        ])  as projection on my.Cosmetics;
+  entity Brands @(restrict : [
+            {
+                grant : [ '*' ],
+                to : [ 'admin' ]
+            }
+        ])  as projection on my.Brands;
+  entity Orders @(restrict : [
+            {
+                grant : [ '*' ],
+                to : [ 'admin' ]
+            }
+        ]) as projection on my.Orders;
 }
