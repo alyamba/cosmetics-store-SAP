@@ -1,0 +1,5 @@
+ID,createdAt,createdBy,modifiedAt,modifiedBy,name,descr,type,brands_ID,price
+135fe703-784c-4b5f-add3-264f35db1471,"2023-08-29T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"lipstick","the best","Face","0baed804-ce6c-453b-a908-3e9231620c99",10
+136fe703-784c-4b5f-add3-264f35db1471,"2023-08-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"lash","natural","Face","0baed804-ce6c-453b-a908-3e9231620c99",20
+137fe703-784c-4b5f-add3-264f35db1471,"2023-08-31T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"cream","delicate","Face","0baed804-ce6c-453b-a908-3e9231620c99",25
+138fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"shampoo","powerful","Face","0baed804-ce6c-453b-a908-3e9231620c99",30

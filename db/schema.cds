@@ -6,13 +6,13 @@ entity Cosmetics : cuid, managed {
   descr  : localized String;
   type  : localized Types;
   brands : Association to Brands;
-  price: Integer;
+  price : Integer;
 }
 
 entity Brands : cuid, managed {
   name   : String;
   country  : Country;
-  cosmetics : Association to many Cosmetics;
+  cosmetics : Association to many Cosmetics on cosmetics.brands = $self;
 }
 
 type Types : String enum {
@@ -26,5 +26,5 @@ entity Orders : cuid, managed {
 
 entity Users : cuid, managed {
   name : String;
-  isAuth : Boolean;
+  email : String;
 }

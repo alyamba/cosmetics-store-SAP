@@ -3,7 +3,7 @@ using { sap.ui.cosmetics as my } from '../db/schema';
 /** Serves end users browsing books and place orders */
 service CatalogService {
   @readonly entity Cosmetics as select from my.Cosmetics {
-    ID, name, brands.name as brands
+    ID, name, descr, brands, type, price
   };
   @requires: 'authenticated-user'
   @insertonly entity Orders as projection on my.Orders;
@@ -38,4 +38,10 @@ service AdminService {
                 to : [ 'admin' ]
             }
         ]) as projection on my.Orders;
+  entity Users @(restrict : [
+      {
+          grant : [ '*' ],
+          to : [ 'admin' ]
+      }
+  ]) as projection on my.Users;
 }

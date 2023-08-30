@@ -1,0 +1,4 @@
+ID,createdAt,createdBy,modifiedAt,modifiedBy,cosmetics_ID,users_ID
+2a3ce281-ab6b-4a84-a7de-b47e7d63fef4, 2023-08-30T12:50:37.960Z, admin, 2023-08-30T12:50:37.960Z, admin, 136fe703-784c-4b5f-add3-264f35db1471, 08b9fbc6-9c3b-4aea-a5f6-6df1c263e487
+3a3ce281-ab6b-4a84-a7de-b47e7d63fef4, 2023-08-30T12:50:37.960Z, admin, 2023-08-30T12:50:37.960Z, admin, 137fe703-784c-4b5f-add3-264f35db1471, 09b9fbc6-9c3b-4aea-a5f6-6df1c263e487
+4a3ce281-ab6b-4a84-a7de-b47e7d63fef4, 2023-08-30T12:50:37.960Z, admin, 2023-08-30T12:50:37.960Z, admin, 138fe703-784c-4b5f-add3-264f35db1471, 10b9fbc6-9c3b-4aea-a5f6-6df1c263e487
