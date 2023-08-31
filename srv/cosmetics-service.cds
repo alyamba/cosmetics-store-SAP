@@ -15,6 +15,11 @@ service UsersService {
   @restrict: [{ grant: 'READ', to: 'buyer' }] // limit to own ones
   @readonly entity Orders as projection on my.Orders;
   action cancelOrder ( ID:Orders, reason:String );
+  
+  // type completeOrder {
+  //   price: Integer;
+  // }
+  // action makeOrder (userId: String,  cosmeticId: String) returns {};
 }
 
 /** Serves administrators managing everything */
