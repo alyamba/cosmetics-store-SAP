@@ -1,7 +1,7 @@
 const colors = require("colors");
 
 module.exports = (srv) => {
-  srv.on("getBrandCosmetics", async (req) => {
+  srv.on("getCosmeticsByBrand", async (req) => {
     const { id } = req.data;
 
     const db = srv.transaction(req);

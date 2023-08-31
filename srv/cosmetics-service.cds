@@ -8,7 +8,7 @@ service CatalogService {
   @requires: 'authenticated-user'
   @insertonly entity Orders as projection on my.Orders;
 
-  function getBrandCosmetics (id: String) returns array of Cosmetics;
+  function getCosmeticsByBrand (id: String) returns array of Cosmetics;
 }
 
 /** Serves registered users managing their account and their orders */
