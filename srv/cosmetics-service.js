@@ -10,7 +10,17 @@ module.exports = (srv) => {
     const results = await db.read(Cosmetics).where({ brands_ID: id });
 
     return results
-    // .map((cosmetics) => cosmetics.name);
+  });
+
+  srv.on("getCosmeticsByOrder", async (req) => {
+    const { id } = req.data;
+
+    const db = srv.transaction(req);
+    let { Orders } = srv.entities;
+
+    const results = await db.read(Orders).where({ ID: id });
+
+    return results.map((order) => order.cosmetics_ID);
   });
 
   srv.before("*", (req) => {
