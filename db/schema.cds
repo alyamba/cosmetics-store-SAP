@@ -20,8 +20,14 @@ type Types : String enum {
 }
 
 entity Orders : cuid, managed {
-  cosmetics : Association to many Cosmetics;
+  cosmetics : Association to Cosmetics;
   users : Association to Users;
+  quantity: Integer;
+  status: localized OrderStatuses;
+}
+
+type OrderStatuses: String enum{
+  Pending; Processing; Ready; 
 }
 
 entity Users : cuid, managed {

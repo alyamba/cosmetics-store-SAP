@@ -9,7 +9,7 @@ module.exports = (srv) => {
 
     const results = await db.read(Cosmetics).where({ brands_ID: id });
 
-    return results
+    return results;
   });
 
   srv.on("getCosmeticsByOrder", async (req) => {
@@ -20,7 +20,7 @@ module.exports = (srv) => {
 
     const results = await db.read(Orders).where({ ID: id });
 
-    return results.map((order) => order.cosmetics_ID);
+    return results;
   });
 
   srv.before("*", (req) => {
