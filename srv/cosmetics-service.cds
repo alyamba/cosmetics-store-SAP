@@ -47,4 +47,5 @@ service AdminService {
   ]) as projection on my.Users;
 
   function getCosmeticsByOrder (id: String) returns array of String;
+  action changeStatusType (orderId: String, orderStatus: String) returns Orders;
 }
