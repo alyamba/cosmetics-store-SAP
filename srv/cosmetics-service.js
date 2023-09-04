@@ -7,7 +7,15 @@ module.exports = (srv) => {
     const db = srv.transaction(req);
     let { Orders } = srv.entities;
 
-    let results = await db
+    const statusArray = ["Pending", "Processing", "Ready"];
+
+    let results = await db.read(Orders);
+    if (!statusArray.includes(orderStatus)) {
+      console.log("This status does not exist".yellow);
+      return results;
+    }
+
+    results = await db
       .update(Orders)
       .set({ status: orderStatus })
       .where({ ID: orderId });
@@ -39,7 +47,7 @@ module.exports = (srv) => {
   });
 
   srv.before("*", (req) => {
-    console.log(`Method: ${req.method}`.yellow.inverse);
+    console.log(`Method: ${req.method}`.green.inverse);
     // console.log(`Target: ${req.target.name}`.yellow.inverse);
   });
 };
