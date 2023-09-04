@@ -1,5 +1,10 @@
 ID,createdAt,createdBy,modifiedAt,modifiedBy,name,descr,type,brands_ID,price
 135fe703-784c-4b5f-add3-264f35db1471,"2023-08-29T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"lipstick","the best","Face","4e9ad821-b585-4c37-8547-f500b5406af2",10
 136fe703-784c-4b5f-add3-264f35db1471,"2023-08-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"lash","natural","Face","4e9ad821-b585-4c37-8547-f500b5406af2",20
-137fe703-784c-4b5f-add3-264f35db1471,"2023-08-31T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"cream","delicate","Face","4e9ad821-b585-4c37-8547-f500b5406af2",25
-138fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"shampoo","powerful","Face","4e9ad821-b585-4c37-8547-f500b5406af2",30
+137fe703-784c-4b5f-add3-264f35db1471,"2023-08-31T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"cream","delicate","Body","4e9ad821-b585-4c37-8547-f500b5406af2",25
+138fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"shampoo","powerful","Hair","8e9ad821-b585-4c37-8547-f500b5406af2",100
+139fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"blush","for cheeks","Face","7e9ad821-b585-4c37-8547-f500b5406af2",50
+140fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"scrub","tenderness","Body","6e9ad821-b585-4c37-8547-f500b5406af2",10
+141fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"mask","renewal","Face","5e9ad821-b585-4c37-8547-f500b5406af2",60
+142fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"mask","silkiness","Hair","5e9ad821-b585-4c37-8547-f500b5406af2",85
+143fe703-784c-4b5f-add3-264f35db1471,"2023-09-30T11:04:49.535Z",admin,"2023-09-30T11:04:49.535Z",admin,"eye patches","freshness","Face","9e9ad821-b585-4c37-8547-f500b5406af2",100
