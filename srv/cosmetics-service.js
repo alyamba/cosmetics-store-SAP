@@ -1,6 +1,19 @@
 const colors = require("colors");
 
 module.exports = (srv) => {
+  srv.on('getTotalCostOfOrder', async (req)=> {
+  const {id} = req.data;
+
+  const db = srv.transaction(req)
+  let {Orders, Cosmetics} = srv.entities;
+
+  let orderInfo = await db.read(Orders).where({ID: id})
+  let cosmeticsInfo = await db.read(Cosmetics).where({ID: orderInfo[0].cosmetics_ID})
+
+  return  orderInfo[0].quantity *  cosmeticsInfo[0].price
+  })
+
+
   srv.on("changeStatusType", async (req) => {
     const { orderId, orderStatus } = req.data;
 

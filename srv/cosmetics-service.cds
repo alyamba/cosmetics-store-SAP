@@ -48,4 +48,5 @@ service AdminService {
 
   function getCosmeticsByOrder (id: String) returns array of String;
   action changeStatusType (orderId: String, orderStatus: String) returns Orders;
+  function getTotalCostOfOrder (id: String) returns Integer
 }
