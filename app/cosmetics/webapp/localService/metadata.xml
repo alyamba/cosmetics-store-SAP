@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="AdminService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Cosmetics" EntityType="AdminService.Cosmetics">
+                    <NavigationPropertyBinding Path="brands" Target="Brands"/>
+                    <NavigationPropertyBinding Path="texts" Target="Cosmetics_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Cosmetics_texts"/>
+                </EntitySet>
+                <EntitySet Name="Brands" EntityType="AdminService.Brands">
+                    <NavigationPropertyBinding Path="country" Target="Countries"/>
+                    <NavigationPropertyBinding Path="cosmetics" Target="Cosmetics"/>
+                </EntitySet>
+                <EntitySet Name="Orders" EntityType="AdminService.Orders">
+                    <NavigationPropertyBinding Path="cosmetics" Target="Cosmetics"/>
+                    <NavigationPropertyBinding Path="users" Target="Users"/>
+                    <NavigationPropertyBinding Path="texts" Target="Orders_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Orders_texts"/>
+                </EntitySet>
+                <EntitySet Name="Users" EntityType="AdminService.Users"/>
+                <EntitySet Name="Countries" EntityType="AdminService.Countries">
+                    <NavigationPropertyBinding Path="texts" Target="Countries_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Countries_texts"/>
+                </EntitySet>
+                <EntitySet Name="Cosmetics_texts" EntityType="AdminService.Cosmetics_texts"/>
+                <EntitySet Name="Orders_texts" EntityType="AdminService.Orders_texts"/>
+                <EntitySet Name="Countries_texts" EntityType="AdminService.Countries_texts"/>
+                <FunctionImport Name="getCosmeticsByOrder" Function="AdminService.getCosmeticsByOrder"/>
+                <ActionImport Name="changeStatusType" Action="AdminService.changeStatusType" EntitySet="Orders"/>
+                <FunctionImport Name="getTotalCostOfOrder" Function="AdminService.getTotalCostOfOrder"/>
+            </EntityContainer>
+            <EntityType Name="Cosmetics">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="descr" Type="Edm.String"/>
+                <Property Name="type" Type="Edm.String"/>
+                <NavigationProperty Name="brands" Type="AdminService.Brands" Partner="cosmetics">
+                    <ReferentialConstraint Property="brands_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="brands_ID" Type="Edm.Guid"/>
+                <Property Name="price" Type="Edm.Int32"/>
+                <NavigationProperty Name="texts" Type="Collection(AdminService.Cosmetics_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AdminService.Cosmetics_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Brands">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="country" Type="AdminService.Countries">
+                    <ReferentialConstraint Property="country_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="country_code" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="cosmetics" Type="Collection(AdminService.Cosmetics)" Partner="brands"/>
+            </EntityType>
+            <EntityType Name="Orders">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <NavigationProperty Name="cosmetics" Type="AdminService.Cosmetics">
+                    <ReferentialConstraint Property="cosmetics_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="cosmetics_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="users" Type="AdminService.Users">
+                    <ReferentialConstraint Property="users_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="users_ID" Type="Edm.Guid"/>
+                <Property Name="quantity" Type="Edm.Int32"/>
+                <Property Name="status" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(AdminService.Orders_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AdminService.Orders_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Users">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="email" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Countries">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(AdminService.Countries_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="AdminService.Countries_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Cosmetics_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="descr" Type="Edm.String"/>
+                <Property Name="type" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Orders_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="status" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Countries_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+            </EntityType>
+            <Function Name="getCosmeticsByOrder" IsBound="false" IsComposable="false">
+                <Parameter Name="id" Type="Edm.String"/>
+                <ReturnType Type="Collection(Edm.String)" Nullable="false"/>
+            </Function>
+            <Action Name="changeStatusType" IsBound="false">
+                <Parameter Name="orderId" Type="Edm.String"/>
+                <Parameter Name="orderStatus" Type="Edm.String"/>
+                <ReturnType Type="AdminService.Orders"/>
+            </Action>
+            <Function Name="getTotalCostOfOrder" IsBound="false" IsComposable="false">
+                <Parameter Name="id" Type="Edm.String"/>
+                <ReturnType Type="Edm.Int32"/>
+            </Function>
+            <Annotations Target="AdminService.Cosmetics/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="AdminService.Cosmetics/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="AdminService.Cosmetics/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="AdminService.Cosmetics/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="AdminService.Cosmetics/type">
+                                        <Annotation Term="Validation.AllowedValues">
+                                            <Collection>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Face"/>
+                                                    <PropertyValue Property="Value" String="Face"/>
+                                                </Record>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Body"/>
+                                                    <PropertyValue Property="Value" String="Body"/>
+                                                </Record>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Hands"/>
+                                                    <PropertyValue Property="Value" String="Hands"/>
+                                                </Record>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Legs"/>
+                                                    <PropertyValue Property="Value" String="Legs"/>
+                                                </Record>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Hair"/>
+                                                    <PropertyValue Property="Value" String="Hair"/>
+                                                </Record>
+                                            </Collection>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="AdminService.Brands/createdAt">
+                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                        </Annotations>
+                                        <Annotations Target="AdminService.Brands/createdBy">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                </Annotations>
+                                                <Annotations Target="AdminService.Brands/modifiedAt">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="AdminService.Brands/modifiedBy">
+                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="AdminService.Brands/country">
+                                                                <Annotation Term="Common.Label" String="{i18n>Country}"/>
+                                                                    <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="AdminService.Brands/country_code">
+                                                                        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+                                                                            <Annotation Term="Common.ValueList">
+                                                                                <Record Type="Common.ValueListType">
+                                                                                    <PropertyValue Property="Label" String="{i18n>Country}"/>
+                                                                                        <PropertyValue Property="CollectionPath" String="Countries"/>
+                                                                                        <PropertyValue Property="Parameters">
+                                                                                            <Collection>
+                                                                                                <Record Type="Common.ValueListParameterInOut">
+                                                                                                    <PropertyValue Property="LocalDataProperty" PropertyPath="country_code"/>
+                                                                                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                                                                                </Record>
+                                                                                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                                                                                </Record>
+                                                                                            </Collection>
+                                                                                        </PropertyValue>
+                                                                                    </Record>
+                                                                                </Annotation>
+                                                                                <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="AdminService.Orders/createdAt">
+                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="AdminService.Orders/createdBy">
+                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="AdminService.Orders/modifiedAt">
+                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="AdminService.Orders/modifiedBy">
+                                                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="AdminService.Orders/status">
+                                                                                                            <Annotation Term="Validation.AllowedValues">
+                                                                                                                <Collection>
+                                                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                                                        <Annotation Term="Core.SymbolicName" String="Pending"/>
+                                                                                                                        <PropertyValue Property="Value" String="Pending"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                                                        <Annotation Term="Core.SymbolicName" String="Processing"/>
+                                                                                                                        <PropertyValue Property="Value" String="Processing"/>
+                                                                                                                    </Record>
+                                                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                                                        <Annotation Term="Core.SymbolicName" String="Ready"/>
+                                                                                                                        <PropertyValue Property="Value" String="Ready"/>
+                                                                                                                    </Record>
+                                                                                                                </Collection>
+                                                                                                            </Annotation>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="AdminService.Users/createdAt">
+                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="AdminService.Users/createdBy">
+                                                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                                                                    </Annotations>
+                                                                                                                    <Annotations Target="AdminService.Users/modifiedAt">
+                                                                                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="AdminService.Users/modifiedBy">
+                                                                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                                                                <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="AdminService.Countries">
+                                                                                                                                    <Annotation Term="UI.Identification">
+                                                                                                                                        <Collection>
+                                                                                                                                            <Record Type="UI.DataField">
+                                                                                                                                                <PropertyValue Property="Value" Path="name"/>
+                                                                                                                                            </Record>
+                                                                                                                                        </Collection>
+                                                                                                                                    </Annotation>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="AdminService.Countries/name">
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="AdminService.Countries/descr">
+                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                                                        </Annotations>
+                                                                                                                                        <Annotations Target="AdminService.Countries/code">
+                                                                                                                                            <Annotation Term="Common.Text" Path="name"/>
+                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+                                                                                                                                            </Annotations>
+                                                                                                                                            <Annotations Target="AdminService.Cosmetics_texts/locale">
+                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="AdminService.Cosmetics_texts/type">
+                                                                                                                                                    <Annotation Term="Validation.AllowedValues">
+                                                                                                                                                        <Collection>
+                                                                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                                                                <Annotation Term="Core.SymbolicName" String="Face"/>
+                                                                                                                                                                <PropertyValue Property="Value" String="Face"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                                                                <Annotation Term="Core.SymbolicName" String="Body"/>
+                                                                                                                                                                <PropertyValue Property="Value" String="Body"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                                                                <Annotation Term="Core.SymbolicName" String="Hands"/>
+                                                                                                                                                                <PropertyValue Property="Value" String="Hands"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                                                                <Annotation Term="Core.SymbolicName" String="Legs"/>
+                                                                                                                                                                <PropertyValue Property="Value" String="Legs"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                                                                <Annotation Term="Core.SymbolicName" String="Hair"/>
+                                                                                                                                                                <PropertyValue Property="Value" String="Hair"/>
+                                                                                                                                                            </Record>
+                                                                                                                                                        </Collection>
+                                                                                                                                                    </Annotation>
+                                                                                                                                                </Annotations>
+                                                                                                                                                <Annotations Target="AdminService.Orders_texts/locale">
+                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="AdminService.Orders_texts/status">
+                                                                                                                                                        <Annotation Term="Validation.AllowedValues">
+                                                                                                                                                            <Collection>
+                                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="Pending"/>
+                                                                                                                                                                    <PropertyValue Property="Value" String="Pending"/>
+                                                                                                                                                                </Record>
+                                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="Processing"/>
+                                                                                                                                                                    <PropertyValue Property="Value" String="Processing"/>
+                                                                                                                                                                </Record>
+                                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="Ready"/>
+                                                                                                                                                                    <PropertyValue Property="Value" String="Ready"/>
+                                                                                                                                                                </Record>
+                                                                                                                                                            </Collection>
+                                                                                                                                                        </Annotation>
+                                                                                                                                                    </Annotations>
+                                                                                                                                                    <Annotations Target="AdminService.Countries_texts/locale">
+                                                                                                                                                        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                                                                        </Annotations>
+                                                                                                                                                        <Annotations Target="AdminService.Countries_texts/name">
+                                                                                                                                                            <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                                                                            </Annotations>
+                                                                                                                                                            <Annotations Target="AdminService.Countries_texts/descr">
+                                                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                                                                                </Annotations>
+                                                                                                                                                                <Annotations Target="AdminService.Countries_texts/code">
+                                                                                                                                                                    <Annotation Term="Common.Text" Path="name"/>
+                                                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+                                                                                                                                                                    </Annotations>
+                                                                                                                                                                </Schema>
+                                                                                                                                                            </edmx:DataServices>
+                                                                                                                                                        </edmx:Edmx>
