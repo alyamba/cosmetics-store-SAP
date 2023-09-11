@@ -27,6 +27,7 @@ service AdminService {
                 to : [ 'admin' ]
             }
         ])  as projection on my.Cosmetics;
+  annotate Cosmetics with @odata.draft.enabled;
   entity Brands @(restrict : [
             {
                 grant : [ '*' ],
@@ -50,3 +51,4 @@ service AdminService {
   action changeStatusType (orderId: String, orderStatus: String) returns Orders;
   function getTotalCostOfOrder (id: String) returns Integer
 }
+

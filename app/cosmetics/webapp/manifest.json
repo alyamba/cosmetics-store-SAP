@@ -8,6 +8,7 @@
       "version": "0.0.1"
     },
     "title": "{{appTitle}}",
+    "subTitle": "{{appSubTitle}}",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -104,6 +105,7 @@
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
+              "editableHeaderContent": true,
               "entitySet": "Cosmetics",
               "variantManagement": "Page",
               "navigation": {
