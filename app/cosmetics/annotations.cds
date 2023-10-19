@@ -3,16 +3,17 @@ using AdminService as service from '../../srv/cosmetics-service';
 annotate service.Cosmetics with @(
     Common.SemanticKey: [ID],
     UI                : {
-        Identification     : [
+        Identification         : [
 
         ],
-        SelectionFields    : [
+        SelectionFields        : [
             name,
             type,
             brands.name,
+            brands.country_code,
             price
         ],
-        LineItem           : [
+        LineItem               : [
             {Value: name},
             {Value: descr},
             {Value: type},
@@ -21,7 +22,7 @@ annotate service.Cosmetics with @(
             {Value: price},
         ],
 
-        HeaderFacets       : [{
+        HeaderFacets           : [{
             $Type : 'UI.ReferenceFacet',
             Label : '{@i18n>Product Info}',
             Target: '@UI.FieldGroup#ProductData'
@@ -46,7 +47,7 @@ annotate service.Cosmetics with @(
                 }
             ]
         },
-        FieldGroup #BrandData: {
+        FieldGroup #BrandData  : {
             $Type: 'UI.FieldGroupType',
             Data : [
                 {
@@ -62,18 +63,17 @@ annotate service.Cosmetics with @(
             ]
         },
 
-        Facets             : [
+        Facets                 : [
             {
                 $Type : 'UI.ReferenceFacet',
                 Label : '{@i18n>Product Info}',
                 Target: '@UI.FieldGroup#ProductData',
-                
+
             },
             {
                 $Type : 'UI.ReferenceFacet',
                 Label : '{@i18n>Brand Info}',
                 Target: '@UI.FieldGroup#BrandData',
-            //     ![@UI.Hidden] : IsActiveEntity
             }
         ]
     },
@@ -89,7 +89,68 @@ annotate service.Cosmetics with @(
             $Type: 'UI.DataField',
             Value: descr
         }
-    },
+    }, 
 
 
 );
+
+annotate service.Brands with {
+    @Common.Label : 'Country'
+    @Common : {
+        Text            : country_code,
+        TextArrangement : #TextOnly
+    }
+    @Common.ValueListWithFixedValues : true
+    @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        Label : 'Country',
+        CollectionPath : 'Countries',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : country_code, 
+                ValueListProperty : 'code'
+            }
+        ]
+    }
+    @Core.Description : 'A country code as specified in ISO 4217'
+    country
+};
+
+annotate service.Cosmetics with {
+    @Common.Label : 'Type'
+    @Common : {
+        Text            : type,
+        TextArrangement : #TextOnly
+    }
+    @Common.ValueListWithFixedValues : true
+    @Common.ValueList: 
+      {
+        $Type: 'type',
+        $FixedValues: true,
+        $Values: [
+          { $EnumMember: 'Pending', $Description: 'Pending' },
+          { $EnumMember: 'Processing', $Description: 'Processing' },
+          { $EnumMember: 'Ready', $Description: 'Ready' }
+        ]
+      }
+    // @Common.ValueList : {
+    //     $Type : 'Common.ValueListType',
+    //     Label : 'Types',
+    //     CollectionPath : 'CosmeticsTypes',
+    //     Parameters : [
+    //         {
+    //             $Type : 'Common.ValueListParameterInOut',
+    //             LocalDataProperty : type, 
+    //             ValueListProperty : 'type'
+    //         }
+    //     ]
+    // }
+    @Core.Description : 'A country code as specified in ISO 4217'
+    type
+};
+
+annotate service.Cosmetics with {
+    @Common.FilterDefaultValue : 50
+    price
+};

@@ -12,11 +12,13 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
-    "@sap/ux-specification": "^1.108.13"
+    "@sap/ux-specification": "^1.108.16"
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-cosmetics": "cds watch --open cosmetics/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-cosmetics": "cds watch --open cosmetics/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-orders": "cds watch --open orders/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-cosmeticssapui5": "cds watch --open cosmeticssapui5/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "features": {
@@ -24,6 +26,7 @@
     }
   },
   "sapux": [
-    "app/cosmetics"
+    "app/cosmetics",
+    "app/orders"
   ]
 }
